@@ -1,10 +1,10 @@
-import mido,scamp
+import mido#,scamp
 
-TRACK_NUM = 8
+TRACK_NUM = 1
 
 mid = mido.MidiFile(r"Super Mario 64 - Medley.mid")
 
-mess = [x.dict() for x in mid.tracks[1] if x.dict()["type"] in ["note_off","note_on"]]
+mess = [x.dict() for x in mid.tracks[TRACK_NUM] if x.dict()["type"] in ["note_off","note_on"]]
 
 instruct = []#[[x["note"],x["time"]] for x in mess if x["type"] == "note_on"]
 
@@ -22,11 +22,17 @@ for xi,x in enumerate(mess):
         else:
             instruct.append([x["note"],1])
 
-        
-for x in instruct: print(x)
+if len(instruct) > 220:
+    print(instruct[:220])
+else:
+    print(instruct)     
+#for x in instruct: print(x)
 
+
+"""
 sess = scamp.Session()
 sess.tempo = 150000
 piano = sess.new_part("paino")
 
 for x in instruct: piano.play_note(x[0],1,x[1])
+"""
